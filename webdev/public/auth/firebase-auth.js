@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, setPersistence, browserSessionPersistence } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, collection, query, where, getDocs, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 // Your web app's Firebase configuration
 // In a production environment, consider using environment variables for these values
@@ -75,26 +75,31 @@ if (signupForm) {
 
 // Login
 const loginForm = document.getElementById('login-form');
+console.log("Looking for login form:", loginForm);
+
 if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const emailOrUsername = loginForm['login-username'].value;
         const password = loginForm['password'].value;
-        const rememberMe = loginForm['remember-me'].checked;
 
         let email = emailOrUsername;
+
+        // Check if input is not an email (assume it's a username)
         if (!isValidEmail(emailOrUsername)) {
-            // If it's not an email, assume it's a username and fetch the corresponding email
             try {
-                const usersRef = doc(db, "usernames", emailOrUsername);
-                const userDoc = await getDoc(usersRef);
-                if (userDoc.exists()) {
-                    email = userDoc.data().email;
+                // Query Firestore to get the email associated with the username
+                const usernameQuery = query(collection(db, "usernames"), where("username", "==", emailOrUsername));
+                const querySnapshot = await getDocs(usernameQuery);
+
+                if (!querySnapshot.empty) {
+                    email = querySnapshot.docs[0].data().email;
                 } else {
-                    showAlert("User not found", 'error');
+                    showAlert("Username not found", 'error');
                     return;
                 }
             } catch (error) {
+                console.error('Error fetching user data:', error);
                 showAlert('Error fetching user data: ' + error.message, 'error');
                 return;
             }
@@ -102,14 +107,10 @@ if (loginForm) {
 
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            if (rememberMe) {
-                // Implement remember me functionality
-                // This could involve storing a token in localStorage
-                localStorage.setItem('rememberMe', userCredential.user.uid);
-            }
             showAlert('Login successful!', 'success');
-            window.location.href = 'dashboard.html';
+            window.location.href = '../index.html';
         } catch (error) {
+            console.error('Login Error:', error);
             showAlert('Login Error: ' + error.message, 'error');
         }
     });
