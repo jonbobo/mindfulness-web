@@ -3,15 +3,17 @@ import { getCurrentUserToken } from '../auth/firebase-auth.js';
 
 export async function renderThread(app, threadId) {
     app.innerHTML = `
-        <div class="container">
-            <h1 id="thread-title"></h1>
-            <div id="thread-content"></div>
-            <div id="comments"></div>
-            <div id="new-comment-form">
-                <textarea id="comment-content" placeholder="Add a comment..."></textarea>
-                <button id="submit-comment">Submit</button>
+       <div class="forum-page">
+            <div class="container">
+                <h1 id="thread-title"></h1>
+                <div id="thread-content"></div>
+                <div id="comments"></div>
+                <div id="new-comment-form">
+                    <textarea id="comment-content" placeholder="Add a comment..."></textarea>
+                    <button id="submit-comment">Submit</button>
+                </div>
+                <p><a href="/forum" class="back-to-forum">Back to Forum</a></p>
             </div>
-            <p><a href="/forum">Back to Forum</a></p>
         </div>
     `;
 

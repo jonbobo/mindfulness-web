@@ -1,4 +1,5 @@
 import { renderForum } from './forum-home.js';
+import { renderHomepage } from './homepage.js';
 import { renderThread } from './thread.js';
 import { renderCreateThread } from './create-thread.js';
 import { auth, logout, isLoggedIn, getCurrentUserId, initializeAuthStateListener } from '../auth/firebase-auth.js';
@@ -9,7 +10,9 @@ let currentUser = null;
 async function router() {
     const path = window.location.pathname;
     try {
-        if (path === '/forum' || path === '/forum/') {
+        if (path === '/' || path === '/index.html' || path === '') {
+            renderHomepage(app);
+        } else if (path === '/forum' || path === '/forum/') {
             await renderForum(app);
         } else if (path.startsWith('/forum/thread/')) {
             const threadId = path.split('/')[3];

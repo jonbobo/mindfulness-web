@@ -77,7 +77,26 @@ if (signupForm) {
             return;
         }
 
+        async function isUsernameAvailable(username) {
+            try {
+                const usernameQuery = query(
+                    collection(db, "usernames"),
+                    where("username", "==", username.toLowerCase())
+                );
+                const querySnapshot = await getDocs(usernameQuery);
+                return querySnapshot.empty;
+            } catch (error) {
+                console.error("Error checking username availability:", error);
+                throw error;
+            }
+        }
+
         try {
+            const usernameAvailable = await isUsernameAvailable(username);
+            if (!usernameAvailable) {
+                showAlert("Username is already taken. Please choose a different username.", 'error');
+                return;
+            }
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             await setDoc(doc(db, "usernames", user.uid), { username, email });

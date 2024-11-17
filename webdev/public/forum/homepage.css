@@ -1,0 +1,38 @@
+.homepage-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.hero-background {
+    width: 100%;
+    height: calc(100vh - 70px);
+    background-image: url('background.jpeg');
+    /* fallback color */
+    background-repeat: no-repeat;
+    background-size: contain;
+    /* shows full image without cropping */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-title {
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    font-size: 2.5rem;
+    /* Adjust size as needed */
+    margin-top: 40px;
+    /* Space from the top */
+    margin-bottom: 40px;
+
+
+}
+
+/* Optional: If you want to add content over the background */
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}

@@ -5,14 +5,16 @@ import { getCurrentUserToken } from '../auth/firebase-auth.js';
 
 export function renderCreateThread(app) {
     app.innerHTML = `
-        <div class="container">
-            <h1>Create New Thread</h1>
-            <form id="new-thread-form">
-                <input type="text" id="thread-title" name="title" placeholder="Thread Title" required>
-                <textarea id="thread-content" name="content" placeholder="Thread Content" required></textarea>
-                <button type="submit">Create Thread</button>
-            </form>
-            <p><a href="/forum">Back to Forum</a></p>
+      <div class="forum-page">
+            <div class="container">
+                <h1>Create New Thread</h1>
+                <form id="new-thread-form">
+                    <input type="text" id="thread-title" name="title" placeholder="Thread Title" required>
+                    <textarea id="thread-content" name="content" placeholder="Thread Content" required></textarea>
+                    <button type="submit" class= "create-thread">Create Thread</button>
+                </form>
+                <p><a href="/forum" class="back-to-forum">Back to Forum</a></p>
+            </div>
         </div>
     `;
 

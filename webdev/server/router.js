@@ -52,16 +52,53 @@ module.exports = (db) => {
     router.get('/threads', async (req, res) => {
         try {
             const [threads] = await db.execute(`
-                SELECT t.id, t.title, t.created_at, 
-                       IFNULL(u.username, 'Unknown User') as user_id
+                SELECT 
+                    t.id, 
+                    t.title, 
+                    t.created_at,
+                    IFNULL(u.username, 'Unknown User') as user_id,
+                    COUNT(DISTINCT v.id) as vote_count
                 FROM threads t
                 LEFT JOIN users u ON t.user_id = u.firebase_uid
+                LEFT JOIN thread_votes v ON t.id = v.thread_id
+                GROUP BY t.id
                 ORDER BY t.created_at DESC
             `);
             res.json(threads);
         } catch (error) {
             console.error('Error fetching threads:', error);
             res.status(500).json({ error: 'Error fetching threads' });
+        }
+    });
+    router.post('/threads/:id/upvote', authenticateToken, async (req, res) => {
+        const threadId = req.params.id;
+        const userId = req.user.uid;
+
+        try {
+            // Check if user has already voted
+            const [existingVotes] = await db.execute(
+                'SELECT * FROM thread_votes WHERE thread_id = ? AND user_id = ?',
+                [threadId, userId]
+            );
+
+            if (existingVotes.length > 0) {
+                // Remove vote if it exists (toggle behavior)
+                await db.execute(
+                    'DELETE FROM thread_votes WHERE thread_id = ? AND user_id = ?',
+                    [threadId, userId]
+                );
+                res.json({ message: 'Vote removed', voted: false });
+            } else {
+                // Add new vote
+                await db.execute(
+                    'INSERT INTO thread_votes (thread_id, user_id) VALUES (?, ?)',
+                    [threadId, userId]
+                );
+                res.json({ message: 'Vote added', voted: true });
+            }
+        } catch (error) {
+            console.error('Error handling vote:', error);
+            res.status(500).json({ error: 'Error handling vote' });
         }
     });
 

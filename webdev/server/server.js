@@ -50,6 +50,16 @@ async function initializeDatabase() {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);
+        await db.execute(`
+            CREATE TABLE IF NOT EXISTS thread_votes (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                thread_id INT NOT NULL,
+                user_id VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE,
+                UNIQUE KEY unique_vote (thread_id, user_id)
+            )
+        `);
 
         // Add comments table creation
         await db.execute(`
