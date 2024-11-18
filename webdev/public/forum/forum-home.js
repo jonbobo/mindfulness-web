@@ -18,7 +18,7 @@ export async function renderForum(app) {
 
         if (upVoteButton) {
             const threadId = upVoteButton.dataset.threadId;
-            const voteCountElement = upVoteButton.nextElementSibling;
+            const voteCountElement = upVoteButton.parentElement.querySelector('.vote-count');
             await handleUpvote(threadId, voteCountElement, upVoteButton);
 
 
