@@ -57,7 +57,8 @@ async function initializeDatabase() {
                 user_id VARCHAR(255) NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE,
-                UNIQUE KEY unique_vote (thread_id, user_id)
+                UNIQUE KEY unique_vote (thread_id, user_id),
+                vote_type ENUM ('upvote', 'downvote') NOT NULL
             )
         `);
 

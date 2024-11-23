@@ -211,7 +211,8 @@
 
 
 /* Specific upvote button styles */
-.forum-page .upvote-button {
+.forum-page .upvote-button,
+.forum-page .downvote-button {
     background: none;
     border: 10px;
     padding: 0;
@@ -223,12 +224,17 @@
     transition: color 0.3s ease;
 }
 
-.forum-page .upvote-button:hover {
+.forum-page .upvote-button:hover,
+.forum-page .downvote-button:hover {
     background-color: rgb(189, 186, 186);
 }
 
-.forum-page .upvote-button.voted {
+.forum-page .upvote-button.upvoted {
     color: rgb(134, 240, 102);
+}
+
+.forum-page .downvote-button.downvoted {
+    color: rgb(201, 43, 43);
 }
 
 .forum-page .vote-count {

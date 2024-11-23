@@ -49,7 +49,31 @@ module.exports = (db) => {
         }
     });
 
-    router.get('/threads', async (req, res) => {
+    router.get('/threads/:id/vote-count', async (req, res) => {
+        try {
+            const [threads] = await db.execute(`
+                SELECT
+                    t.id,
+                    (
+                        SELECT COUNT(*) 
+                        FROM thread_votes
+                        WHERE thread_id = t.id AND vote_type = 'upvote'
+                    ) - (
+                        SELECT COUNT(*) 
+                        FROM thread_votes
+                        WHERE thread_id = t.id AND vote_type = 'downvote'
+                    ) as vote_count
+                FROM threads t
+                WHERE t.id = ?
+            `, [req.params.id]);
+
+            res.json(threads[0]?.vote_count ?? 0);
+        } catch (error) {
+            console.error('Error fetching vote count:', error);
+            res.status(500).json({ error: 'Error fetching vote count' });
+        }
+    })
+    router.get('/threads', authenticateToken, async (req, res) => {
         try {
             const [threads] = await db.execute(`
                 SELECT 
@@ -57,45 +81,74 @@ module.exports = (db) => {
                     t.title, 
                     t.created_at,
                     IFNULL(u.username, 'Unknown User') as user_id,
-                    COUNT(DISTINCT v.id) as vote_count
+                    (
+                        SELECT COUNT(*) 
+                        FROM thread_votes 
+                        WHERE thread_id = t.id AND vote_type = 'upvote'
+                    ) - (
+                        SELECT COUNT(*) 
+                        FROM thread_votes 
+                        WHERE thread_id = t.id AND vote_type = 'downvote'
+                    ) as vote_count,
+                    IFNULL((
+                        SELECT vote_type 
+                        FROM thread_votes 
+                        WHERE thread_id = t.id AND user_id = ? 
+                        LIMIT 1
+                    ), NULL) as userVote
                 FROM threads t
                 LEFT JOIN users u ON t.user_id = u.firebase_uid
-                LEFT JOIN thread_votes v ON t.id = v.thread_id
                 GROUP BY t.id
-                ORDER BY t.created_at DESC
-            `);
+                ORDER BY vote_count DESC, t.created_at DESC
+            `, [req.user?.uid || null]);
+
             res.json(threads);
         } catch (error) {
             console.error('Error fetching threads:', error);
             res.status(500).json({ error: 'Error fetching threads' });
         }
     });
-    router.post('/threads/:id/upvote', authenticateToken, async (req, res) => {
+    router.post('/threads/:id/vote', authenticateToken, async (req, res) => {
         const threadId = req.params.id;
         const userId = req.user.uid;
+        const { voteType } = req.body; // 'upvote' or 'downvote'
 
         try {
-            // Check if user has already voted
+            // Check existing vote
             const [existingVotes] = await db.execute(
-                'SELECT * FROM thread_votes WHERE thread_id = ? AND user_id = ?',
+                'SELECT vote_type FROM thread_votes WHERE thread_id = ? AND user_id = ?',
                 [threadId, userId]
             );
 
             if (existingVotes.length > 0) {
-                // Remove vote if it exists (toggle behavior)
-                await db.execute(
-                    'DELETE FROM thread_votes WHERE thread_id = ? AND user_id = ?',
-                    [threadId, userId]
-                );
-                res.json({ message: 'Vote removed', voted: false });
+                const currentVote = existingVotes[0].vote_type;
+
+                if (currentVote === voteType) {
+                    // Remove vote if same type
+                    await db.execute(
+                        'DELETE FROM thread_votes WHERE thread_id = ? AND user_id = ?',
+                        [threadId, userId]
+
+                    );
+                    res.json({ message: 'Vote removed', voted: false, voteType: null });
+                } else {
+                    // Update vote type
+                    await db.execute(
+                        'UPDATE thread_votes SET vote_type = ? WHERE thread_id = ? AND user_id = ?',
+                        [voteType, threadId, userId]
+                    );
+                    res.json({ message: 'Vote updated', voted: true, voteType });
+                }
             } else {
                 // Add new vote
                 await db.execute(
-                    'INSERT INTO thread_votes (thread_id, user_id) VALUES (?, ?)',
-                    [threadId, userId]
+                    'INSERT INTO thread_votes (thread_id, user_id, vote_type) VALUES (?, ?, ?)',
+                    [threadId, userId, voteType]
                 );
-                res.json({ message: 'Vote added', voted: true });
+                res.json({ message: 'Vote added', voted: true, voteType });
+
             }
+
         } catch (error) {
             console.error('Error handling vote:', error);
             res.status(500).json({ error: 'Error handling vote' });
