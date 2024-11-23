@@ -73,8 +73,21 @@ module.exports = (db) => {
             res.status(500).json({ error: 'Error fetching vote count' });
         }
     })
-    router.get('/threads', authenticateToken, async (req, res) => {
+    router.get('/threads', async (req, res) => {
         try {
+            let userId = null;
+            const authHeader = req.headers['authorization'];
+            const token = authHeader && authHeader.split(' ')[1];
+
+            if (token) {
+                try {
+                    const decodedToken = await admin.auth().verifyIdToken(token);
+                    userId = decodedToken.uid;
+                } catch (error) {
+                    console.warn('Invalid token provided:', error);
+                }
+            }
+
             const [threads] = await db.execute(`
                 SELECT 
                     t.id, 
@@ -100,7 +113,7 @@ module.exports = (db) => {
                 LEFT JOIN users u ON t.user_id = u.firebase_uid
                 GROUP BY t.id
                 ORDER BY vote_count DESC, t.created_at DESC
-            `, [req.user?.uid || null]);
+            `, [userId]);
 
             res.json(threads);
         } catch (error) {
