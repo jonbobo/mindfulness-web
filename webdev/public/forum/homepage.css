@@ -1,38 +1,244 @@
-.homepage-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 15px;
+/* Color variables */
+:root {
+    --dark-color: #333;
+    --light-color: #f5f5f5;
+    --primary-color: #4a90e2;
+    --nav-purple: #9b6b9e;
+    --nav-blue: #6b9e9e;
+    --nav-green: #6b9e6b;
+    --nav-orange: #9e9e6b;
+    --nav-red: #9e6b6b;
+    --text-spacing: 1.7;
+    /* Base line height for consistent spacing */
 }
 
-.hero-background {
-    width: 100%;
-    height: calc(100vh - 70px);
-    background-image: url('background.jpeg');
-    /* fallback color */
-    background-repeat: no-repeat;
-    background-size: contain;
-    /* shows full image without cropping */
+body {
+    font-size: 1.2rem;
+    /* 16px */
+}
+
+/* Base text spacing */
+.section p,
+.section li,
+.subsection-title {
+    line-height: var(--text-spacing);
+    margin-bottom: calc(1rem * var(--text-spacing));
+    letter-spacing: 0.01em;
+    word-spacing: 0.05em;
+}
+
+/* Navigation styles */
+.nav-index {
+    position: sticky;
+    top: 0;
+    margin-top: 25px;
+    background: white;
+    padding: 1rem;
+    z-index: 100;
+}
+
+.nav-index ul {
+    list-style: none;
     display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
     justify-content: center;
-    align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
-.hero-title {
-    text-align: center;
-    color: black;
-    text-decoration: none;
-    font-size: 2.5rem;
-    /* Adjust size as needed */
-    margin-top: 40px;
-    /* Space from the top */
-    margin-bottom: 40px;
-
-
+.main-title {
+    margin-top: 45px;
 }
 
-/* Optional: If you want to add content over the background */
-.hero-content {
+/* Content list styles */
+.section ul,
+.section ol {
+    list-style-type: disc !important;
+    margin: calc(1rem * var(--text-spacing)) 0;
+    padding-left: 2.5rem;
+}
+
+.section ol {
+    list-style-type: decimal !important;
+}
+
+.section ul li,
+.section ol li {
+    padding-left: 0.5rem;
+    margin-bottom: calc(0.8rem * var(--text-spacing));
     position: relative;
-    z-index: 1;
+}
+
+/* Section titles spacing */
+.section-title {
+    font-size: 2rem;
+    color: var(--dark-color);
+    margin: calc(1.5rem * var(--text-spacing)) 0 calc(1rem * var(--text-spacing));
     text-align: center;
+}
+
+.section-image {
+    width: 100%;
+    max-width: 1200px;
+    /* Match your content max-width */
+    height: auto;
+    /* Maintain image proportion */
+    aspect-ratio: 16 / 9;
+    /* Standard widescreen ratio - adjust as needed */
+    object-fit: cover;
+    border-radius: 8px;
+    margin: calc(1.5rem * var(--text-spacing)) auto;
+    /* Center the image */
+    display: block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section-image3 {
+    width: 100%;
+    max-width: 700px;
+    /* Match your content max-width */
+    height: auto;
+
+    /* Standard widescreen ratio - adjust as needed */
+    object-fit: cover;
+    border-radius: 8px;
+    margin: calc(1.5rem * var(--text-spacing)) auto;
+    /* Center the image */
+    display: block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subsection-title {
+    font-size: 1.5rem;
+    color: var(--dark-color);
+    margin: calc(1.2rem * var(--text-spacing)) 0 calc(0.8rem * var(--text-spacing));
+}
+
+/* Navigation link styles */
+.nav-index a {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    color: white;
+    transition: transform 0.2s;
+}
+
+.nav-index a:hover {
+    transform: scale(1.05);
+}
+
+/* Navigation color classes */
+.nav-mindfulness {
+    background-color: var(--nav-purple);
+}
+
+.nav-meditation {
+    background-color: var(--nav-blue);
+}
+
+.nav-relationship {
+    background-color: var(--nav-green);
+}
+
+.nav-challenges {
+    background-color: var(--nav-orange);
+}
+
+.nav-practice {
+    background-color: var(--nav-red);
+}
+
+/* Section color coordination */
+#mindfulness .section-title {
+    color: var(--nav-purple);
+}
+
+#meditation .section-title {
+    color: var(--nav-blue);
+}
+
+#relationship .section-title {
+    color: var(--nav-green);
+}
+
+#challenges .section-title {
+    color: var(--nav-orange);
+}
+
+#practice .section-title {
+    color: var(--nav-red);
+}
+
+/* Image placeholders */
+.image-placeholder {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 2rem;
+    margin: calc(.5rem * var(--text-spacing)) 0;
+    text-align: center;
+    color: #666;
+}
+
+/* Section styles */
+.section {
+    scroll-margin-top: 100px;
+    margin: calc(1.5rem * var(--text-spacing)) 0;
+    padding: 0 1rem;
+}
+
+/* Emphasis block spacing */
+.emphasis {
+    font-style: italic;
+    color: #555;
+    padding: calc(1rem * var(--text-spacing));
+    border-left: 4px solid var(--primary-color);
+    background-color: var(--light-color);
+    margin: calc(1.5rem * var(--text-spacing)) 0;
+    line-height: var(--text-spacing);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    :root {
+        --text-spacing: 1.6;
+        /* Slightly reduced spacing for mobile */
+    }
+
+    .nav-index ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-index a {
+        width: 100%;
+        text-align: center;
+    }
+
+    .section ul,
+    .section ol {
+        padding-left: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .subsection-title {
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    :root {
+        --text-spacing: 1.5;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .subsection-title {
+        font-size: 1.15rem;
+    }
 }
