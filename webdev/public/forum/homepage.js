@@ -16,7 +16,7 @@ export function renderHomepage(container) {
             <div id="mindfulness" class="section">
                 <h2 class="section-title">What is Mindfulness?</h2>
                 <img 
-                    src="/forum/brainfood.jpeg" 
+                    src="/forum/images/brainfood.jpeg" 
                     alt="Person sitting peacefully in nature, demonstrating present-moment awareness"
                     class="section-image"
                 />
@@ -41,7 +41,7 @@ export function renderHomepage(container) {
             <div id="meditation" class="section">
                 <h2 class="section-title">What is Meditation?</h2>
                 <img 
-                    src="/forum/meditation.jpeg" 
+                    src="/forum/images/meditation.jpeg" 
                     alt="Person sitting peacefully in nature, demonstrating present-moment awareness"
                     class="section-image"
                 />
@@ -70,7 +70,7 @@ export function renderHomepage(container) {
             <div id="relationship" class="section">
                 <h2 class="section-title">The Relationship Between Mindfulness and Meditation</h2>
                 <img 
-                    src="/forum/mindfulness-vs-meditation.jpg" 
+                    src="/forum/images/mindfulness-vs-meditation.jpg" 
                     alt="Person sitting peacefully in nature, demonstrating present-moment awareness"
                     class="section-image3"
                 />
@@ -80,7 +80,7 @@ export function renderHomepage(container) {
             <div id="challenges" class="section">
                 <h2 class="section-title">Modern Challenges to Mindfulness</h2>
                 <img 
-                    src="/forum/distractions.jpeg" 
+                    src="/forum/images/distractions.jpeg" 
                     alt="Person sitting peacefully in nature, demonstrating present-moment awareness"
                     class="section-image"
                 />
@@ -106,7 +106,7 @@ export function renderHomepage(container) {
             <div id="practice" class="section">
                 <h2 class="section-title">Getting Started with Meditation</h2>
                 <img 
-                    src="/forum/sisyphus.jpeg" 
+                    src="/forum/images/sisyphus.jpeg" 
                     alt="Person sitting peacefully in nature, demonstrating present-moment awareness"
                     class="section-image"
                 />
@@ -131,7 +131,7 @@ export function renderHomepage(container) {
                 </ul>
                 
                 <p class="emphasis">Remember: These challenges are normal and part of the practice. Success in meditation isn't measured by how few thoughts you have, but by how gently you return to your focus when distracted. <br>
-                <span class="attribution">-Sun tzu</span> </p>
+                <span class="attribution">-Sun Tzu</span> </p>
             </div>
 
             <div class="section">

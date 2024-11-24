@@ -12,10 +12,7 @@
     /* Base line height for consistent spacing */
 }
 
-body {
-    font-size: 1.2rem;
-    /* 16px */
-}
+
 
 /* Base text spacing */
 .section p,
@@ -25,6 +22,7 @@ body {
     margin-bottom: calc(1rem * var(--text-spacing));
     letter-spacing: 0.01em;
     word-spacing: 0.05em;
+    font-size: 1.25rem;
 }
 
 /* Navigation styles */
@@ -49,6 +47,7 @@ body {
 
 .main-title {
     margin-top: 45px;
+    font-size: 2.3rem;
 }
 
 /* Content list styles */
