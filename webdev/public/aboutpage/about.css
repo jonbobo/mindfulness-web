@@ -1,0 +1,63 @@
+/* Additional about page specific styles */
+.profile-image {
+    width: 90%;
+    max-width: 1200px;
+    height: auto;
+    /* Maintain image proportion */
+    aspect-ratio: 16 / 9;
+    /* Standard widescreen ratio - adjust as needed */
+    object-fit: cover;
+    border-radius: 8px;
+    margin: calc(1.5rem * var(--text-spacing)) auto;
+    /* Center the image */
+    display: block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: calc(1.5rem * var(--text-spacing)) 0;
+}
+
+.skill-card {
+    background-color: var(--light-color);
+    border-left: 4px solid var(--nav-blue);
+    padding: 1rem;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: calc(1.5rem * var(--text-spacing)) 0;
+}
+
+.contact-links a {
+    text-decoration: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: transform 0.2s;
+    background-color: var(--primary-color);
+}
+
+.contact-links a:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
