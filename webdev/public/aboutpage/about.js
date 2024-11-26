@@ -32,7 +32,7 @@ export function renderAboutPage(container) {
             </div>
 
             <div class="section">
-                <h2 class="section-title">Core Skills</h2>
+                <h2 class="section-title">Come join me!</h2>
                 <div class="skills-grid">
                     <div class="skill-card">
                         <h3 class="subsection-title">Meditation Coaching</h3>
@@ -40,26 +40,25 @@ export function renderAboutPage(container) {
                     </div>
                     <div class="skill-card">
                         <h3 class="subsection-title">Mindfulness Training</h3>
-                        <p>Creating workshops and programs that integrate mindfulness into daily personal and professional life.</p>
-                    </div>
-                    <div class="skill-card">
-                        <h3 class="subsection-title">Digital Wellness</h3>
-                        <p>Developing strategies to maintain mental health in an increasingly connected world.</p>
+                        <p>Workshops and programs that integrate mindfulness into daily personal and professional life.</p>
                     </div>
                     <div class="skill-card">
                         <h3 class="subsection-title">Stress Management</h3>
                         <p>Teaching evidence-based techniques for reducing anxiety and improving emotional regulation.</p>
                     </div>
+                    <div class="skill-card">
+                        <h3 class="subsection-title">Chess Coaching</h3>
+                        <p>Teaching mindful strategies through chess: developing focus, emotional regulation, and strategic thinking for students of all ages.</p>
+                    </div>
                 </div>
             </div>
 
             <div class="section">
-                <h2 class="section-title">Certifications & Training</h2>
-                <ul>
-                    <li>Certified Meditation Instructor, Mindfulness Institute</li>
-                    <li>Advanced Mindfulness Practitioner Certification</li>
-                    <li>Digital Wellness and Mental Health Counseling</li>
-                </ul>
+                <h2 class="section-title"></h2>
+                <p class="emphasis">
+                    "When what you think good, say good, and do good, you will be happy; when what you think bad, say bad, and do bad, you will be unhappy."<br>
+                    -Phra KK
+                </p>
             </div>
 
             <div class="section">
@@ -71,13 +70,7 @@ export function renderAboutPage(container) {
                 </div>
             </div>
 
-            <div class="section">
-                <h2 class="section-title">My Philosophy</h2>
-                <p class="emphasis">
-                    "In a world of constant noise and distraction, true wisdom lies in the ability to be fully 
-                    present, to listen deeply - both to yourself and to others."
-                </p>
-            </div>
+
         </div>
     `;
 }
